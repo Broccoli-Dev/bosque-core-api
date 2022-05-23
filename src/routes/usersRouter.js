@@ -37,4 +37,22 @@ router.post('/', (req, res) => {
   });
 });
 
+router.patch('/:id', (req, res) => {
+  const { id } = req.params;
+  const body = req.body;
+  res.json({
+    message: 'Users patched',
+    data: body,
+    id: id
+  });
+});
+
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  res.json({
+    message: "User Deleted",
+    id
+  });
+});
+
 module.exports = router;
