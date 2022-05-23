@@ -1,38 +1,29 @@
 const express = require('express');
-const faker = require('faker');
+const InvoiceService = require('../services/invoice.service');
 
 const router = express.Router();
 
+const service = new InvoiceService();
+
 router.get('/', (req, res) => {
-  const users = [];
-  const { size } = req.query;
-  const limit = size || 10;
-  for (let index = 0; index < limit; index++) {
-    users.push({
-      userName: faker.name.firstName(),
-      password: faker.lorem.words()
-    });
-  }
-  res.json(users);
+  const invoices = service.find();
+  res.json(invoices);
 });
 
 router.get('/filter', (req, res) => {
-  res.send('Users with a filter');
+  res.send('Invoices with a filter');
 });
 
 router.get('/:id', (req, res) => {
   const { id } = req.params;
-  res.json({
-    id,
-    userName: "name 1",
-    password: "password 123"
-  });
+  const invoice = service.findOne(id);
+  res.json(invoice);
 });
 
 router.post('/', (req, res) => {
   const body = req.body;
-  res.json({
-    message: 'User Created',
+  res.status(201).json({
+    message: 'Invoice Created',
     data: body
   });
 });
@@ -41,7 +32,7 @@ router.patch('/:id', (req, res) => {
   const { id } = req.params;
   const body = req.body;
   res.json({
-    message: 'Users patched',
+    message: 'Invoice patched',
     data: body,
     id: id
   });
@@ -50,9 +41,10 @@ router.patch('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
   res.json({
-    message: "User Deleted",
+    message: "Invoice Deleted",
     id
   });
 });
+
 
 module.exports = router;

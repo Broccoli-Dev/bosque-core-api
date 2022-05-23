@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/Broccoli-Dev/bosque-core-api#readme",
   "devDependencies": {
+    "@types/faker": "^6.6.9",
     "eslint": "^8.16.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
