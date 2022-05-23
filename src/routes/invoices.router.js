@@ -22,28 +22,21 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   const body = req.body;
-  res.status(201).json({
-    message: 'Invoice Created',
-    data: body
-  });
+  const newInvoice = service.create(body);
+  res.status(201).json(newInvoice);
 });
 
 router.patch('/:id', (req, res) => {
   const { id } = req.params;
   const body = req.body;
-  res.json({
-    message: 'Invoice patched',
-    data: body,
-    id: id
-  });
+  const invoice = service.update(id, body);
+  res.json(invoice);
 });
 
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
-  res.json({
-    message: "Invoice Deleted",
-    id
-  });
+  const response = service.delete(id);
+  res.json(response);
 });
 
 

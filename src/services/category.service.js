@@ -10,8 +10,8 @@ class CategoryService {
   generate() {
     const limit = 100;
     for (let index = 0; index < limit; index++) {
-      categories.push({
-        id: aker.datatype.uuid(),
+      this.categories.push({
+        id: faker.datatype.uuid(),
         hamburguesas: faker.lorem.words(),
         platos_fuertes: faker.lorem.words(),
         perros: faker.lorem.words(),
@@ -26,8 +26,13 @@ class CategoryService {
   }
 
 
-  created() {
-
+  create(data) {
+    const newCategory = {
+      id: faker.datatype.uuid(),
+      ...data
+    }
+    this.categories.push(newCategory);
+    return newCategory;
   };
 
   find() {
@@ -38,12 +43,26 @@ class CategoryService {
     return this.categories.find(item => item.id == id);
   };
 
-  update() {
-
+  update(id, changes) {
+    const index = this.categories.findIndex(item => item.id == id);
+    if (index === -1) {
+      throw new Error('Category Not Found')
+    }
+    const category = this.categories[index];
+    this.categories[index] = {
+      ...category,
+      ...changes
+    }
+    return this.categories[index];
   };
 
-  delete() {
-
+  delete(id) {
+    const index = this.categories.findIndex(item => item.id == id);
+    if (index === -1) {
+      throw new Error('Category Not Found')
+    }
+    this.categories.splice(index, 1);
+    return { id };
   };
 };
 

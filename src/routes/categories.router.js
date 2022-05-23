@@ -1,9 +1,9 @@
 const express = require('express');
-const InvoiceService = require('../services/invoice.service');
+const CategoryService = require('../services/category.service');
 
 const router = express.Router();
 
-const service = new InvoiceService;
+const service = new CategoryService;
 
 router.get('/', (req, res) => {
   const categories = service.find();
@@ -22,28 +22,21 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   const body = req.body;
-  res.status(201).json({
-    message: 'Category Created',
-    data: body
-  });
+  const newCategory = service.create(body);
+  res.status(201).json(newCategory);
 });
 
 router.patch('/:id', (req, res) => {
   const { id } = req.params;
   const body = req.body;
-  res.json({
-    message: 'Categories patched',
-    data: body,
-    id: id
-  });
+  const category = service.update(id, body);
+  res.json(category);
 });
 
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
-  res.json({
-    message: "Category Deleted",
-    id
-  });
+  const response = service.delete(id);
+  res.json(response);
 });
 
 

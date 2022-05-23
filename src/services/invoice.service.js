@@ -27,8 +27,13 @@ class InvoiceService {
   }
 
 
-  created() {
-
+  create(data) {
+    const newInvoice = {
+      id: faker.datatype.uuid(),
+      ...data
+    }
+    this.invoices.push(newInvoice);
+    return newInvoice;
   };
 
   find() {
@@ -39,12 +44,26 @@ class InvoiceService {
     return this.invoices.find(item => item.id == id);
   };
 
-  update() {
-
+  update(id, changes) {
+    const index = this.invoices.findIndex(item => item.id == id);
+    if (index === -1) {
+      throw new Error('Invoice Not Found')
+    }
+    const invoice = this.invoices[index];
+    this.invoices[index] = {
+      ...invoice,
+      ...changes
+    }
+    return this.invoices[index];
   };
 
-  delete() {
-
+  delete(id) {
+    const index = this.invoices.findIndex(item => item.id == id);
+    if (index === -1) {
+      throw new Error('Invoice Not Found')
+    }
+    this.invoices.splice(index, 1);
+    return { id };
   };
 };
 
