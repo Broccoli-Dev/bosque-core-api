@@ -1,4 +1,5 @@
 const faker = require('faker');
+const boom = require('@hapi/boom');
 
 class InvoiceService {
 
@@ -7,7 +8,7 @@ class InvoiceService {
     this.generate();
   };
 
-  generate() {
+  async generate() {
     const limit = 100;
   for (let index = 0; index < limit; index++) {
     this.invoices.push({
@@ -27,7 +28,7 @@ class InvoiceService {
   }
 
 
-  create(data) {
+  async create(data) {
     const newInvoice = {
       id: faker.datatype.uuid(),
       ...data
@@ -36,18 +37,22 @@ class InvoiceService {
     return newInvoice;
   };
 
-  find() {
+  async find() {
     return this.invoices;
   };
 
-  findOne(id) {
-    return this.invoices.find(item => item.id == id);
+  async findOne(id) {
+    const invoice = this.invoices.find(item => item.id == id);
+    if (!invoice) {
+      throw boom.notFound('User not found');
+    }
+    return invoice;
   };
 
-  update(id, changes) {
+  async update(id, changes) {
     const index = this.invoices.findIndex(item => item.id == id);
     if (index === -1) {
-      throw new Error('Invoice Not Found')
+      throw boom.notFound('User not found');
     }
     const invoice = this.invoices[index];
     this.invoices[index] = {
@@ -57,10 +62,10 @@ class InvoiceService {
     return this.invoices[index];
   };
 
-  delete(id) {
+  async delete(id) {
     const index = this.invoices.findIndex(item => item.id == id);
     if (index === -1) {
-      throw new Error('Invoice Not Found')
+      throw boom.notFound('User not found');
     }
     this.invoices.splice(index, 1);
     return { id };
