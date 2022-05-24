@@ -1,43 +1,17 @@
-const faker = require('faker');
 const boom = require('@hapi/boom');
+const pool = require('../lib/postgres pool');
 
 class CategoryService {
 
   constructor() {
-    this.categories = [];
-    this.generate();
-  };
-
-  async generate() {
-    const limit = 100;
-    for (let index = 0; index < limit; index++) {
-      this.categories.push({
-        id: faker.datatype.uuid(),
-        hamburguesas: faker.lorem.words(),
-        platos_fuertes: faker.lorem.words(),
-        perros: faker.lorem.words(),
-        papas: faker.lorem.words(),
-        limonadas: faker.lorem.words(),
-        sodas: faker.lorem.words(),
-        bebidas: faker.lorem.words(),
-        servezas: faker.lorem.words(),
-        domicilios: faker.lorem.words(),
-      });
-    };
-  }
-
-
-  async create(data) {
-    const newCategory = {
-      id: faker.datatype.uuid(),
-      ...data
-    }
-    this.categories.push(newCategory);
-    return newCategory;
+    this.pool = pool;
+    this.pool.on('error', (err) => console.error(err));
   };
 
   async find() {
-    return this.categories;
+    const query = 'SELECT * FROM categories';
+    const response = await this.pool.query(query);
+    return response.rows;
   };
 
   async findOne(id) {

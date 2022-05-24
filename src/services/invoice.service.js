@@ -1,44 +1,17 @@
-const faker = require('faker');
 const boom = require('@hapi/boom');
+const pool = require('../lib/postgres pool');
 
 class InvoiceService {
 
   constructor() {
-    this.invoices = [];
-    this.generate();
-  };
-
-  async generate() {
-    const limit = 100;
-  for (let index = 0; index < limit; index++) {
-    this.invoices.push({
-      id: faker.datatype.uuid(),
-      invoice_number: parseInt(faker.commerce.price(), 10),
-      date: faker.date.past(),
-      time: faker.time.recent(),
-      chair: Math.random(),
-      client: faker.name.firstName(),
-      order_id: faker.datatype.uuid(),
-      sub_total: parseInt(faker.commerce.price(), 10),
-      discount: parseInt(faker.commerce.price(), 10),
-      total: parseInt(faker.commerce.price(), 10),
-      payment: faker.lorem.word()
-    });
-    };
-  }
-
-
-  async create(data) {
-    const newInvoice = {
-      id: faker.datatype.uuid(),
-      ...data
-    }
-    this.invoices.push(newInvoice);
-    return newInvoice;
+    this.pool = pool;
+    this.pool.on('error', (err) => console.error(err));
   };
 
   async find() {
-    return this.invoices;
+    const query = 'SELECT * FROM invoices';
+    const response = await this.pool.query(query);
+    return response.rows;
   };
 
   async findOne(id) {
