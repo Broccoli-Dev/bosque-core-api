@@ -1,39 +1,39 @@
 const Joi = require('joi');
 
-const id = Joi.string().uuid();
-const hamburguesas = Joi.string().min(3);
-const platos_fuertes = Joi.string().min(3);
-const perros = Joi.string().min(3);
-const papas = Joi.string().min(3);
-const limonadas = Joi.string().min(3);
+const id = Joi.number().integer();
+const burguers = Joi.string().min(3);
+const strong_plates = Joi.string().min(3);
+const hot_dogs = Joi.string().min(3);
+const french_fries = Joi.string().min(3);
+const limonades = Joi.string().min(3);
 const sodas = Joi.string().min(3);
-const bebidas = Joi.string().min(3);
-const servezas = Joi.string().min(3);
-const domicilios = Joi.string().min(3);
+const beverages = Joi.string().min(3);
+const berrs = Joi.string().min(3);
+const domi = Joi.string().min(3);
 
 
 const createCategoriesSchema = Joi.object({
-        hamburguesas: hamburguesas.required(),
-        platos_fuertes: platos_fuertes.required(),
-        perros: perros.required(),
-        papas: papas.required(),
-        limonadas: limonadas.required(),
+        burguers: burguers.required(),
+        strong_plates: strong_plates.required(),
+        hot_dogs: hot_dogs.required(),
+        french_fries: french_fries.required(),
+        limonades: limonades.required(),
         sodas: sodas.required(),
-        bebidas: bebidas.required(),
-        servezas: servezas.required(),
-        domicilios: domicilios.required()
+        beverages: beverages.required(),
+        berrs: berrs.required(),
+        domi: domi.required()
 });
 
 const updateCategoriesSchema = Joi.object({
-        hamburguesas: hamburguesas,
-        platos_fuertes: platos_fuertes,
-        perros: perros,
-        papas: papas,
-        limonadas: limonadas,
+        burguers: burguers,
+        strong_plates: strong_plates,
+        hot_dogs: hot_dogs,
+        french_fries: french_fries,
+        limonades: limonades,
         sodas: sodas,
-        bebidas: bebidas,
-        servezas: servezas,
-        domicilios: domicilios
+        beverages: beverages,
+        berrs: berrs,
+        domi: domi
 });
 
 const getCategoriesSchema = Joi.object({

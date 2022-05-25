@@ -1,9 +1,9 @@
 const Joi = require('joi');
 
-const id = Joi.string().uuid();
+const id = Joi.number().integer();
 const invoice_number = Joi.number().integer();
 const date = Joi.date();
-const chair = Joi.number().integer();
+const table = Joi.number().integer();
 const client = Joi.string().min(3);
 const sub_total = Joi.number().integer();
 const discount = Joi.number().integer();
@@ -14,7 +14,7 @@ const payment = Joi.string().min(3);
 const createInvoiceSchema = Joi.object({
   invoice_number: invoice_number.required(),
   date: date.required(),
-  chair: chair.required(),
+  table: table.required(),
   client: client.required(),
   sub_total: sub_total.required(),
   discount: discount.required(),
@@ -25,7 +25,7 @@ const createInvoiceSchema = Joi.object({
 const updateInvoiceSchema = Joi.object({
   invoice_number: invoice_number,
   date: date,
-  chair: chair,
+  table: table,
   client: client,
   sub_total: sub_total,
   discount: discount,

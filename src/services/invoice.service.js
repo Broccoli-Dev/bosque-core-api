@@ -1,46 +1,43 @@
 const boom = require('@hapi/boom');
-const pool = require('../lib/postgres pool');
+const { models} = require('../lib/sequelize');
 
 class InvoiceService {
 
-  constructor() {
-    this.pool = pool;
-    this.pool.on('error', (err) => console.error(err));
-  };
+  constructor() {};
 
   async find() {
-    const query = 'SELECT * FROM invoices';
-    const response = await this.pool.query(query);
-    return response.rows;
+    const response = await models.Invoice.findAll();
+    return response;
   };
 
   async findOne(id) {
-    const invoice = this.invoices.find(item => item.id == id);
-    if (!invoice) {
-      throw boom.notFound('User not found');
+    const invoice = await models.Invoice.findByPk(id);
+    if(!invoice) {
+      throw boom.notFound('Invoice not found');
     }
     return invoice;
   };
 
+  async create(data) {
+    const newInvoice = await models.Invoice.create(data);
+    return newInvoice;
+  }
+
   async update(id, changes) {
-    const index = this.invoices.findIndex(item => item.id == id);
-    if (index === -1) {
-      throw boom.notFound('User not found');
+    const invoice = await models.Invoice.findByPk(id);
+    if(!invoice) {
+      throw boom.notFound('Invoice not found');
     }
-    const invoice = this.invoices[index];
-    this.invoices[index] = {
-      ...invoice,
-      ...changes
-    }
-    return this.invoices[index];
+    const response = await invoice.update(changes);
+    return response;
   };
 
   async delete(id) {
-    const index = this.invoices.findIndex(item => item.id == id);
-    if (index === -1) {
-      throw boom.notFound('User not found');
+    const invoice = await models.Invoice.findByPk(id);
+    if(!invoice) {
+      throw boom.notFound('Invoice not found');
     }
-    this.invoices.splice(index, 1);
+    await invoice.destroy();
     return { id };
   };
 };

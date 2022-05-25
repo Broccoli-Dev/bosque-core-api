@@ -1,46 +1,43 @@
 const boom = require('@hapi/boom');
-const pool = require('../lib/postgres pool');
+const { models } = require('../lib/sequelize');
 
 class CategoryService {
 
-  constructor() {
-    this.pool = pool;
-    this.pool.on('error', (err) => console.error(err));
-  };
+  constructor() {};
 
   async find() {
-    const query = 'SELECT * FROM categories';
-    const response = await this.pool.query(query);
-    return response.rows;
+    const response = await models.Category.findAll();
+    return response;
   };
 
   async findOne(id) {
-    const category = this.categories.find(item => item.id == id);
-    if (!category) {
-      throw boom.notFound('User not found');
+    const category = await models.Category.findByPk(id);
+    if(!category) {
+      throw boom.notFound('Category not found');
     }
     return category;
   };
 
+  async create(data) {
+    const newCategory = await models.Category.create(data);
+    return newCategory;
+  }
+
   async update(id, changes) {
-    const index = this.categories.findIndex(item => item.id == id);
-    if (index === -1) {
-      throw boom.notFound('User not found');
+    const category = await models.Category.findByPk(id);
+    if(!category) {
+      throw boom.notFound('Category not found');
     }
-    const category = this.categories[index];
-    this.categories[index] = {
-      ...category,
-      ...changes
-    }
-    return this.categories[index];
+    const response = await category.update(changes);
+    return response;
   };
 
   async delete(id) {
-    const index = this.categories.findIndex(item => item.id == id);
-    if (index === -1) {
-      throw boom.notFound('User not found');
+    const category = await models.Category.findByPk(id);
+    if(!category) {
+      throw boom.notFound('Category not found');
     }
-    this.categories.splice(index, 1);
+    await category.destroy();
     return { id };
   };
 };
