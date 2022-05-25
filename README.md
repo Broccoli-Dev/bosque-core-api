@@ -1,2 +1,2 @@
 # bosque-core-api
-BackEnd bosque with javaScrit and Express.js
+BackEnd El bosque restaurant with javaScrit and Express.js
