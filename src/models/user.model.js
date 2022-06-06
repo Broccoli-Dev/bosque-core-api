@@ -18,6 +18,30 @@ const UserSchema = {
     allowNull: false,
     type: DataTypes.STRING
   },
+  document: {
+    allowNull: false,
+    type: DataTypes.INTEGER
+  },
+  cel: {
+    allowNull: false,
+    type: DataTypes.INTEGER
+  },
+  email: {
+    allowNull: false,
+    type: DataTypes.STRING
+  },
+  salary: {
+    allowNull: false,
+    type: DataTypes.STRING
+  },
+  address: {
+    allowNull: false,
+    type: DataTypes.STRING
+  },
+  date_birth: {
+    allowNull: false,
+    type: DataTypes.DATE
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
