@@ -1,39 +1,39 @@
 const express = require('express');
-const RolesService = require('../services/roles.service');
+const ScheduleService = require('../services/schedules.service');
 const validatorHandler = require('../middlewares/validator.handler');
-const { createRoleSchema, updateRoleSchema, getRoleSchema } = require('../schemas/roles.schema');
+const { createScheduleSchema, updateScheduleSchema, getScheduleSchema } = require('../schemas/schedule.schema');
 
 const router = express.Router();
-const service = new RolesService();
+const service = new ScheduleService();
 
 router.get('/', async (req, res) => {
-  const roles = await service.find();
-  res.json(roles);
+  const schedule = await service.find();
+  res.json(schedule);
 });
 
 router.get('/filter', (req, res) => {
-  res.send('Roles with a filter');
+  res.send('Schedules with a filter');
 });
 
 router.get('/:id',
-  validatorHandler(getRoleSchema, 'params'),
+  validatorHandler(getScheduleSchema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
-    const roles = await service.findOne(id);
-    res.json(roles);
+    const schedules = await service.findOne(id);
+    res.json(schedules);
     } catch (error) {
       next(error);
     }
 });
 
 router.post('/',
-  validatorHandler(createRoleSchema, 'body'),
+  validatorHandler(createScheduleSchema, 'body'),
   async (req, res, next) => {
     try{
       const body = req.body;
-      const newRoles = await service.create(body);
-      res.status(201).json(newRoles);
+      const newSchedule = await service.create(body);
+      res.status(201).json(newSchedule);
     } catch (error) {
       next(error);
     }
@@ -41,21 +41,21 @@ router.post('/',
   });
 
 router.patch('/:id',
-  validatorHandler(getRoleSchema, 'params'),
-  validatorHandler(updateRoleSchema, 'body'),
+  validatorHandler(getScheduleSchema, 'params'),
+  validatorHandler(updateScheduleSchema, 'body'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
     const body = req.body;
-    const roles = await service.update(id, body);
-    res.json(roles);
+    const schedule = await service.update(id, body);
+    res.json(schedule);
     } catch (error) {
       next(error);
     };
 });
 
 router.delete('/:id',
-validatorHandler(getRoleSchema, 'params'),
+validatorHandler(getScheduleSchema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
