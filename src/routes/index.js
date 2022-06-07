@@ -2,14 +2,15 @@ const express = require('express');
 const usersRouter = require('./users.router');
 const invoicesRouter = require('./invoices.router');
 const categoriesRouter = require('./categories.router');
-const headquartersRouter = require('./headquarters.router')
-const rolesRouter = require('./roles.router')
-const activitiesRouter = require('./activities.router')
-const schedulesRouter = require('./schedules.router')
-const ordersRouter = require('./orders.router')
-const productsRouter = require('./products.router')
-const ingredientsRouter = require('./ingredients.router')
-const rawMaterialRouter = require('./rawMaterial.router')
+const headquartersRouter = require('./headquarters.router');
+const rolesRouter = require('./roles.router');
+const activitiesRouter = require('./activities.router');
+const schedulesRouter = require('./schedules.router');
+const ordersRouter = require('./orders.router');
+const productsRouter = require('./products.router');
+const ingredientsRouter = require('./ingredients.router');
+const rawMaterialRouter = require('./rawMaterial.router');
+const supplierRouter = require('./suppliers.router');
 
 function routerApi(app) {
   const router = express.Router();
@@ -25,6 +26,7 @@ function routerApi(app) {
   router.use('/products', productsRouter);
   router.use('/ingredients', ingredientsRouter);
   router.use('/rawMaterial', rawMaterialRouter);
+  router.use('/suppliers', supplierRouter);
 }
 
 module.exports = routerApi;
