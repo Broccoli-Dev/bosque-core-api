@@ -8,6 +8,7 @@ const { Schedule, ScheduleSchema } = require('./schedule.model');
 const { Order, OrderSchema } = require('./order.model');
 const { Product, ProductSchema } = require('./product.model');
 const { Ingredient, IngredientSchema } = require('./ingredient.model');
+const { RawMaterial, RawMaterialSchema } = require('./rawMaterial.model');
 
 function setupModels(sequelize) {
   User.init(UserSchema, User.config(sequelize));
@@ -20,6 +21,7 @@ function setupModels(sequelize) {
   Order.init(OrderSchema, Order.config(sequelize));
   Product.init(ProductSchema, Product.config(sequelize));
   Ingredient.init(IngredientSchema, Ingredient.config(sequelize));
+  RawMaterial.init(RawMaterialSchema, RawMaterial.config(sequelize));
 }
 
 module.exports = setupModels;
